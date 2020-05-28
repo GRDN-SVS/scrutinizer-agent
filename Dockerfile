@@ -1,4 +1,6 @@
-FROM rust:latest-apline
+FROM rust:slim-stretch
+
+RUN apt update && apt install libssl-dev pkg-config build-essential -y
 
 WORKDIR /usr/src/scrutinizer-agent
 COPY . .
