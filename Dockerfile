@@ -1,6 +1,6 @@
 FROM rust:slim-stretch
 
-RUN apt update && apt install libssl-dev pkg-config build-essential -y
+RUN apt update && apt install libssl-dev pkg-config build-essential libpq-dev -y
 
 WORKDIR /usr/src/scrutinizer-agent
 COPY . .
