@@ -42,9 +42,9 @@ pub async fn decrypt_and_count_votes(
     // then open the secret shared with the judge and the client
     let mut election_results: HashMap<Vec<u8>, i32> = HashMap::new();
     for vote in &mut votes {
-        vote.encrypted_vote = decrypter.verify(&vote.encrypted_vote, &judge_service.public_key);
+        vote.encrypted_vote = decrypter.verify(&vote.encrypted_vote, &judge_service.sign_public_key);
         vote.encrypted_vote =
-            decrypter.open(&vote.encrypted_vote, &vote.nonce, &judge_service.public_key);
+            decrypter.open(&vote.encrypted_vote, &vote.nonce, &judge_service.box_public_key);
         let original_vote =
             decrypter.open(&vote.encrypted_vote, &vote.nonce, &vote.voter_public_key);
 
