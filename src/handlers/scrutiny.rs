@@ -48,8 +48,6 @@ pub async fn decrypt_and_count_votes(
         let original_vote =
             decrypter.open(&vote.encrypted_vote, &vote.nonce, &vote.voter_public_key);
 
-        println!("{}", &original_vote[0]);
-
         if let Some(curr_count) = election_results.get_mut(&original_vote[0]) {
             *curr_count += 1;
         } else {
@@ -60,7 +58,7 @@ pub async fn decrypt_and_count_votes(
     let mut insertable_res_vec = Vec::with_capacity(election_results.len());
     for (option, count) in election_results.into_iter() {
         let option_result = ScrutinyResult {
-            option_id: option,
+            option_id: option as i32,
             result: count,
         };
         insertable_res_vec.push(option_result);
