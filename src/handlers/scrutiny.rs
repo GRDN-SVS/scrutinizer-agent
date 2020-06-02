@@ -48,6 +48,8 @@ pub async fn decrypt_and_count_votes(
         let original_vote =
             decrypter.open(&vote.encrypted_vote, &vote.nonce, &vote.voter_public_key);
 
+        println!("{}", &original_vote[0]);
+
         if let Some(curr_count) = election_results.get_mut(&original_vote[0]) {
             *curr_count += 1;
         } else {
