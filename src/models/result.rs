@@ -2,7 +2,7 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct ScrutinyResult {
-    pub option_id: Vec<u8>,
+    pub option_id: u8,
     pub result: i32,
 }
 

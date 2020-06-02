@@ -40,7 +40,7 @@ pub async fn decrypt_and_count_votes(
     };
     // Decrypt the votes by verifying the judge's signature,
     // then open the secret shared with the judge and the client
-    let mut election_results: HashMap<Vec<u8>, i32> = HashMap::new();
+    let mut election_results: HashMap<u8, i32> = HashMap::new();
     for vote in &mut votes {
         vote.encrypted_vote =
             decrypter.open(&vote.encrypted_vote, &vote.nonce, &judge_service.box_public_key);
@@ -48,10 +48,10 @@ pub async fn decrypt_and_count_votes(
         let original_vote =
             decrypter.open(&vote.encrypted_vote, &vote.nonce, &vote.voter_public_key);
 
-        if let Some(curr_count) = election_results.get_mut(&original_vote) {
+        if let Some(curr_count) = election_results.get_mut(&original_vote[0]) {
             *curr_count += 1;
         } else {
-            election_results.insert(original_vote, 1);
+            election_results.insert(original_vote[0], 1);
         }
     }
     // Store in MongoDB
